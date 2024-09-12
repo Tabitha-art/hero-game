@@ -6,15 +6,8 @@ use src\skills\Context;
 use src\skills\MagicShield;
 use src\skills\RapidStrike;
 
-class Orderus
+class Orderus extends Character
 {
-    public $name = 'Orderus';
-    public $health;
-    public $strength;
-    public $defence;
-    public $speed;
-    public $luck;
-
     public $skills = [];
 
     public function __construct()
@@ -25,25 +18,17 @@ class Orderus
         $this->speed = rand(40, 50);
         $this->luck = rand(10, 30);
 
+        $this->loadSkills();
+    }
+
+    public function getName()
+    {
+        return 'Orderus';
+    }
+
+    public function loadSkills()
+    {
         $this->skills[] = new RapidStrike();
         $this->skills[] = new MagicShield();
-    }
-
-    public function applyAttackSkills($damage)
-    {
-        return $this->applySkills($damage, Context::ATTACK);
-    }
-
-    public function applyDefenseSkills($damage)
-    {
-        return $this->applySkills($damage, Context::DEFENSE);
-    }
-
-    private function applySkills($damage, $context)
-    {
-        foreach ($this->skills as $skill) {
-            $damage = $skill->apply($damage, $context);
-        }
-        return $damage;
     }
 }

@@ -2,18 +2,22 @@
 
 namespace src\skills;
 
+use src\Character;
 class RapidStrike extends AbstractSkill
 {
-    protected $chance = 0.1;
+    protected function getChance()
+    {
+        return 0.1;
+    }
 
     protected function shouldApply($context)
     {
         return $context === Context::ATTACK;
     }
 
-    protected function applyEffect($damage)
+    protected function applyEffect($damage, Character $character)
     {
-        echo "Orderus folosește Rapid Strike!\n";
+        echo "{$character->getName()} folosește Rapid Strike!\n";
         return $damage * 2;
     }
 }

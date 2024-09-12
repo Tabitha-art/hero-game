@@ -14,18 +14,10 @@ class HeroGame
     public function initCharactersStats()
     {
         $this->orderus = new Orderus();
-        echo "{$this->orderus->name} health: {$this->orderus->health}\n";
-        echo "{$this->orderus->name} strength: {$this->orderus->strength}\n";
-        echo "{$this->orderus->name} defence: {$this->orderus->defence}\n";
-        echo "{$this->orderus->name} speed: {$this->orderus->speed}\n";
-        echo "{$this->orderus->name} luck: {$this->orderus->luck}\n";
+        $this->orderus->displayStats();
 
         $this->monster = new Monster();
-        echo "{$this->monster->name} health: {$this->monster->health}\n";
-        echo "{$this->monster->name} strength: {$this->monster->strength}\n";
-        echo "{$this->monster->name} defence: {$this->monster->defence}\n";
-        echo "{$this->monster->name} speed: {$this->monster->speed}\n";
-        echo "{$this->monster->name} luck: {$this->monster->luck}\n";
+        $this->monster->displayStats();
     }
 
 
@@ -71,14 +63,8 @@ class HeroGame
             return;
         }
 
-        if($this->attacker instanceof Orderus)
-        {
-            $this->damage = $this->orderus->applyAttackSkills($this->damage);
-        } else
-        {
-            $this->damage = $this->orderus->applyDefenseSkills($this->damage);
-        }
-
+        $this->damage = $this->attacker->applyAttackSkills($this->damage);
+        $this->damage = $this->defender->applyDefenseSkills($this->damage);
     }
 
     public function switchRoles()
@@ -102,17 +88,17 @@ class HeroGame
         for($i=1; $i<=$this->turns; $i++)
         {
             echo "Incepe atacul $i\n";
-            echo "{$this->attacker->name} atacă\n";
+            echo "{$this->attacker->getName()} atacă\n";
 
             $this->calculateDamage();
 
             $this->defender->health -= $this->damage;
             echo "Dauna produsa: $this->damage\n";
-            echo "Sănătatea rămasă a lui {$this->defender->name}: {$this->defender->health}\n";
+            echo "Sănătatea rămasă a lui {$this->defender->getName()}: {$this->defender->health}\n";
 
             if ($this->defender->health <= 0)
             {
-                echo "{$this->attacker->name} a câștigat lupta!\n";
+                echo "{$this->attacker->getName()} a câștigat lupta!\n";
                 return;
             }
 

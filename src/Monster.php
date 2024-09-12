@@ -2,15 +2,8 @@
 
 namespace src;
 
-class Monster
+class Monster extends Character
 {
-    public $name = 'Monster';
-    public $health;
-    public $strength;
-    public $defence;
-    public $speed;
-    public $luck;
-
     public function __construct()
     {
         $this->health = rand(60, 90);
@@ -18,5 +11,17 @@ class Monster
         $this->defence = rand(40, 60);
         $this->speed = rand(40, 60);
         $this->luck = rand(25, 40);
+
+        $this->loadSkills();
+    }
+
+    public function getName()
+    {
+        return 'Monster';
+    }
+
+    public function loadSkills()
+    {
+       return $this->skills = [];
     }
 }
