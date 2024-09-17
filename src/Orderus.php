@@ -21,12 +21,12 @@ class Orderus extends Character
         $this->loadSkills();
     }
 
-    public function getName()
+    public function getName(): string
     {
         return 'Orderus';
     }
 
-    public function loadSkills()
+    public function loadSkills(): void
     {
         $this->skills[] = new RapidStrike();
         $this->skills[] = new MagicShield();

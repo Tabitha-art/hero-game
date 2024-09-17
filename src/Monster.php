@@ -15,13 +15,13 @@ class Monster extends Character
         $this->loadSkills();
     }
 
-    public function getName()
+    public function getName(): string
     {
         return 'Monster';
     }
 
-    public function loadSkills()
+    public function loadSkills(): void
     {
-       return $this->skills = [];
+       $this->skills = [];
     }
 }
