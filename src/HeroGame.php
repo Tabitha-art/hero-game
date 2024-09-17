@@ -23,29 +23,48 @@ class HeroGame
 
     public function initCharactersPosition()
     {
-        if($this->orderus->speed > $this->monster->speed)
-        {
-            $this->attacker = $this->orderus;
-            $this->defender = $this->monster;
+        if ($this->hasOrderusHigherSpeed()) {
+            $this->setAttackerAndDefender($this->orderus, $this->monster);
+        } elseif ($this->hasMonsterHigherSpeed()) {
+            $this->setAttackerAndDefender($this->monster, $this->orderus);
+        } else {
+            $this->resolveEqualSpeed();
         }
-        elseif($this->orderus->speed < $this->monster->speed)
-        {
-            $this->attacker = $this->monster;
-            $this->defender = $this->orderus;
+    }
+
+    public function hasOrderusHigherSpeed()
+    {
+        return $this->orderus->speed > $this->monster->speed;
+    }
+
+    public function hasMonsterHigherSpeed()
+    {
+        return $this->orderus->speed < $this->monster->speed;
+    }
+
+    public function resolveEqualSpeed()
+    {
+        if ($this->hasOrderusHigherLuck()) {
+            $this->setAttackerAndDefender($this->orderus, $this->monster);
+        } elseif ($this->hasMonsterHigherLuck()) {
+            $this->setAttackerAndDefender($this->monster, $this->orderus);
         }
-        else
-        {
-            if($this->orderus->luck > $this->monster->luck)
-            {
-                $this->attacker = $this->orderus;
-                $this->defender = $this->monster;
-            }
-            elseif($this->orderus->luck < $this->monster->luck)
-            {
-                $this->attacker = $this->orderus;
-                $this->defender = $this->monster;
-            }
-        }
+    }
+
+    public function hasOrderusHigherLuck()
+    {
+        return $this->orderus->luck > $this->monster->luck;
+    }
+
+    public function hasMonsterHigherLuck()
+    {
+        return $this->orderus->luck < $this->monster->luck;
+    }
+
+    public function setAttackerAndDefender($attacker, $defender)
+    {
+        $this->attacker = $attacker;
+        $this->defender = $defender;
     }
 
     public function calculateBaseDamage()
