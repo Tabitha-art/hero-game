@@ -6,11 +6,6 @@ use src\Character;
 
 class MagicShield extends AbstractSkill
 {
-    protected function getChance()
-    {
-        return 0.2;
-    }
-
     protected function shouldApply($context)
     {
         return $context === Context::DEFENSE;

@@ -5,11 +5,6 @@ namespace src\skills;
 use src\Character;
 class RapidStrike extends AbstractSkill
 {
-    protected function getChance()
-    {
-        return 0.1;
-    }
-
     protected function shouldApply($context)
     {
         return $context === Context::ATTACK;

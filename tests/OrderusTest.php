@@ -44,4 +44,32 @@ class OrderusTest extends TestCase
     {
         $this->assertEquals('Orderus', $this->orderus->getName());
     }
+
+    public function testApplyAttackSkills()
+    {
+        $damage = 30;
+
+        $this->orderus->skills = [
+            new RapidStrike(1.0)
+        ];
+
+        $newDamage = $this->orderus->applyAttackSkills($damage);
+
+        $this->assertEquals($damage * 2, $newDamage);
+    }
+
+    public function testApplyDefenseSkills()
+    {
+        $damage = 30;
+
+        $this->orderus->skills = [
+            new MagicShield(1.0)
+        ];
+
+        $newDamage = $this->orderus->applydefenseSkills($damage);
+
+        $this->assertEquals($damage / 2, $newDamage);
+    }
+
+
 }

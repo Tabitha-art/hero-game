@@ -4,6 +4,8 @@ use PHPUnit\Framework\TestCase;
 use src\HeroGame;
 use src\Monster;
 use src\Orderus;
+use src\skills\MagicShield;
+use src\skills\RapidStrike;
 
 class HeroGameTest extends TestCase
 {
@@ -125,15 +127,50 @@ class HeroGameTest extends TestCase
 
     public function testCalculateDamageAvoidedAttack()
     {
-        $this->heroGame->monster->luck = 100;
-
         $this->heroGame->initCharactersStats();
         $this->heroGame->initCharactersPosition();
+
+        $this->heroGame->defender->luck = 100;
 
         $this->expectOutputRegex('/Apărătorul a evitat atacul!/');
         $this->heroGame->calculateDamage();
 
         $this->assertEquals(0, $this->heroGame->damage);
+    }
+
+    public function testCalculateDamageUsingRapidStrike()
+    {
+        $this->heroGame->initCharactersStats();
+        $this->heroGame->initCharactersPosition();
+
+        $this->heroGame->defender->luck = 0;
+        $this->heroGame->attacker->skills = [
+            new RapidStrike(1.0)
+        ];
+
+        $damage = $this->heroGame->calculateBaseDamage();
+        $this->heroGame->calculateDamage();
+        $this->assertEquals($damage * 2, $this->heroGame->damage);
+    }
+
+    public function testCalculateDamageUsingMagicShield()
+    {
+        $this->heroGame->initCharactersStats();
+        $this->heroGame->initCharactersPosition();
+
+        $this->heroGame->defender->luck = 0;
+        $this->heroGame->defender->skills = [
+            new MagicShield(1.0)
+        ];
+
+        $damage = $this->heroGame->calculateBaseDamage();
+        $this->heroGame->calculateDamage();
+        $this->assertEquals($damage / 2, $this->heroGame->damage);
+    }
+
+    public function testApplyAttackSkills()
+    {
+
     }
 
     public function testCalculateDamage()

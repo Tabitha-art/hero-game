@@ -6,9 +6,17 @@ use src\Character;
 
 abstract class AbstractSkill implements SkillInterface
 {
-    abstract protected function getChance();
-    abstract protected function shouldApply($context);
-    abstract protected function applyEffect($damage, Character $character);
+    protected $chanceToUseIt;
+
+    public function __construct($characterChance)
+    {
+        $this->chanceToUseIt = $characterChance;
+    }
+
+    public function getChance()
+    {
+        return $this->chanceToUseIt;
+    }
 
     protected function isTriggered()
     {
@@ -22,5 +30,8 @@ abstract class AbstractSkill implements SkillInterface
         }
         return $damage;
     }
+
+    abstract protected function shouldApply($context);
+    abstract protected function applyEffect($damage, Character $character);
 
 }

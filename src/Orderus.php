@@ -28,7 +28,7 @@ class Orderus extends Character
 
     public function loadSkills(): void
     {
-        $this->skills[] = new RapidStrike();
-        $this->skills[] = new MagicShield();
+        $this->skills[] = new RapidStrike(0.1);
+        $this->skills[] = new MagicShield(0.2);
     }
 }
